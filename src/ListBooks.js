@@ -16,11 +16,19 @@ class ListBooks extends Component{
       search(this.state.query)
       .then(data => (
         this.setState(currentState => {
-          currentState.concat(data)
-        })
-      ))
-      
-      }
+          const updatedBookSearch = currentState.searchedBooks.concat(data)
+          
+        if(query === ""){
+          return{searchedBooks: []}
+        }
+        if(query.length >= 1){
+          return{
+            searchedBooks: updatedBookSearch
+          }
+        }
+        
+        
+        })))}
       
 
    
@@ -31,8 +39,7 @@ class ListBooks extends Component{
 
         return(
             <div className="search-books">
-              {console.log(searchedBooks)}
-
+    {console.log(searchedBooks)}
             <div className="search-books-bar">
               <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
               <div className="search-books-input-wrapper">
