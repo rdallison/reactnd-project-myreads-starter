@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {get, getAll, search}  from './BooksAPI'
+import {get, getAll, search, update}  from './BooksAPI'
+import {Link} from 'react-router-dom'
+import PrintBooks from './PrintBooks'
 
 class ListBooks extends Component{
 
@@ -13,10 +15,10 @@ class ListBooks extends Component{
       this.setState({
           query: query.trim()
       })   
-      search(this.state.query)
+      search(query)
       .then(data => (
         this.setState(currentState => {
-          const updatedBookSearch = currentState.searchedBooks.concat(data)
+          const updatedBookSearch = data
           
         if(query === ""){
           return{searchedBooks: []}
@@ -29,7 +31,11 @@ class ListBooks extends Component{
         
         
         })))}
-      
+
+        bookUpdate(book, event){
+          update(book, event)
+        }
+    
 
    
 
@@ -39,11 +45,11 @@ class ListBooks extends Component{
 
         return(
             <div className="search-books">
-    {searchedBooks.map(book => (
-     <h1>{book.title}</h1>
-    ))}
             <div className="search-books-bar">
+              <Link to="/">
               <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
+              </Link>
+              
               <div className="search-books-input-wrapper">
                 {/*
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -59,8 +65,29 @@ class ListBooks extends Component{
               </div>
             </div>
             <div className="search-books-results">
+              {console.log(searchedBooks)}
               <ol className="books-grid">
-              
+              {searchedBooks.map(book => (
+                <li key={book.id}>
+                <div className="book">
+                  <div className="book-top">
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
+                    <div className="book-shelf-changer">
+                      <select onChange={event => this.bookUpdate(book, event.target.value)}>
+                        <option value="move" disabled>Move to...</option>
+                        <option value="currentlyReading">Currently Reading</option>
+                        <option value="wantToRead">Want to Read</option>
+                        <option value="read">Read</option>
+                        <option value="none" selected>None</option>
+                        
+                      </select>
+                    </div>
+                  </div>
+              <div className="book-title">{book.title}</div>
+              <div className="book-authors">{book.authors}</div>
+                </div>
+              </li>
+              ))}
               </ol>
             </div>
           </div>
