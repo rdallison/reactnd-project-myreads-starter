@@ -23,6 +23,15 @@ class BooksApp extends Component {
   }
   
   bookUpdate(book, event){
+
+    if(book.shelf === "none"){
+      const minusBook = this.state.myBooks.filter(currentBook =>
+        currentBook.title !== book.title)
+      this.setState({
+        myBooks: minusBook
+      })
+    }
+
     update(book, event)
      this.setState({
       book: book
