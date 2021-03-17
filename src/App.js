@@ -44,12 +44,24 @@ class BooksApp extends Component {
     //If so, we need to call the update method and update the book in our state to cause the rerender
 
     update(book, event)
-    const updatedShelf = myBooks.map(currentBook => {
+    let updatedShelf = myBooks.map(currentBook => {
       if(currentBook.id === book.id){
         currentBook.shelf = event
       }
       return currentBook
     })
+
+    let found = false;
+      updatedShelf.forEach((current) => {
+        if(current.title === book.title){
+          found = true
+        }
+      })
+
+      if(found === false){
+        updatedShelf = updatedShelf.concat(book)
+      }      
+
      this.setState({
       myBooks: updatedShelf
     })
@@ -96,7 +108,7 @@ class BooksApp extends Component {
           </Route>
         
 
-        <Route exact path="/search" component={ListBooks}></Route>
+        <Route exact path="/search" component={() => <ListBooks bookUpdate={this.bookUpdate} myBooks={this.state.myBooks}/>}></Route>
       </div>
     )
   }

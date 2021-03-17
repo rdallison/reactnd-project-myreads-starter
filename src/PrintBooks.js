@@ -26,18 +26,16 @@ class PrintBooks extends Component{
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
             <div className="book-shelf-changer">
-              <select onChange={event => bookUpdate(book, event.target.value)}>
+              <select onChange={event => bookUpdate(book, event.target.value)} value={book.shelf}>
             {  bookOptions.map(option => {
             
                 if(book.shelf === option.value){
-
                     return(
-                        <option value={option.value} selected >{option.print}</option>
+                        <option key ={option.value} value={option.value} >{option.print}</option>
                         )      
-
                 }else{
                     return(
-                        <option value={option.value} >{option.print}</option>
+                        <option key={option.value} value={option.value} >{option.print}</option>
                         )      
                 }
 

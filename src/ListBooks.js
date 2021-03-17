@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {search, update}  from './BooksAPI'
+import {search}  from './BooksAPI'
 import {Link} from 'react-router-dom'
 
 class ListBooks extends Component{
@@ -31,16 +31,11 @@ class ListBooks extends Component{
         
         })))}
 
-        bookUpdate(book, event){
-          update(book, event)
-        }
-    
-
-   
-
-    render(){
+     
+  render(){
 
       const {query, searchedBooks} = this.state;
+      const {bookUpdate, myBooks} = this.props;
 
         return(
             <div className="search-books">
@@ -64,7 +59,6 @@ class ListBooks extends Component{
               </div>
             </div>
             <div className="search-books-results">
-              {console.log(searchedBooks)}
               <ol className="books-grid">
               {searchedBooks.map(book => (
                 <li key={book.id}>
@@ -72,7 +66,7 @@ class ListBooks extends Component{
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
                     <div className="book-shelf-changer">
-                      <select onChange={event => this.bookUpdate(book, event.target.value)}>
+                      <select onChange={event => bookUpdate(book, event.target.value, myBooks)}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
