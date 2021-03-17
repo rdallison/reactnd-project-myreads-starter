@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {get, getAll, search, update}  from './BooksAPI'
+import {search, update}  from './BooksAPI'
 import {Link} from 'react-router-dom'
-import PrintBooks from './PrintBooks'
 
 class ListBooks extends Component{
 

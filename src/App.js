@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import ListBooks from './ListBooks'
-import {get, getAll, search, update}  from './BooksAPI'
+import {getAll, update}  from './BooksAPI'
 import PrintBooks from './PrintBooks'
 import './App.css'
 
@@ -12,6 +12,8 @@ class BooksApp extends Component {
     showSearchPage: false,
     book: {}
   }
+
+  
 
   componentDidMount(){
     getAll()
@@ -24,17 +26,32 @@ class BooksApp extends Component {
   
   bookUpdate = (book, event) => {
 
+    const {myBooks} = this.state;
+
+    //Checks to see if we set the bookshelf to none
+    //If so we need to remove the book from the shelf
+
     if(book.shelf === "none"){
       const minusBook = this.state.myBooks.filter(currentBook =>
         currentBook.title !== book.title)
-      this.setState({
+      
+        this.setState({
         myBooks: minusBook
       })
     }
 
+    //Checks to see if we updated the shelf for a certain book
+    //If so, we need to call the update method and update the book in our state to cause the rerender
+
     update(book, event)
+    const updatedShelf = myBooks.map(currentBook => {
+      if(currentBook.id === book.id){
+        currentBook.shelf = event
+      }
+      return currentBook
+    })
      this.setState({
-      book: book
+      myBooks: updatedShelf
     })
   }
 
@@ -44,6 +61,7 @@ class BooksApp extends Component {
     const currReading = this.state.myBooks.filter(book => book.shelf === "currentlyReading");
     const wantToRead = this.state.myBooks.filter(book => book.shelf === "wantToRead");
     const alreadyRead = this.state.myBooks.filter(book => book.shelf === "read");
+    
 
 
     return (
