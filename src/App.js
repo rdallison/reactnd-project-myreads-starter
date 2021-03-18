@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import ListBooks from './ListBooks'
-import {getAll, update, get}  from './BooksAPI'
+import {getAll, update}  from './BooksAPI'
 import PrintBooks from './PrintBooks'
 import './App.css'
 
@@ -36,8 +36,11 @@ class BooksApp extends Component {
 
     //Checks to see if we updated the shelf for a certain book
     //If so, we need to call the update method and update the book in our state to cause the rerender
-
+    const bookAdded = myBooks.concat(book)
     update(book, event)
+    .then(this.setState({
+      mybooks: bookAdded
+    }))
     let updatedShelf = myBooks.map(currentBook => {
       if(currentBook.id === book.id){
         currentBook.shelf = event
