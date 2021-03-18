@@ -2,26 +2,20 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {Route} from 'react-router-dom'
 import ListBooks from './ListBooks'
-import {getAll, update}  from './BooksAPI'
+import {getAll, update, get}  from './BooksAPI'
 import PrintBooks from './PrintBooks'
 import './App.css'
 
 class BooksApp extends Component {
   state = {
-    myBooks: [],
-    showSearchPage: false,
-    book: {}
+    myBooks: []
   }
 
   
 
-  componentDidMount(){
-    getAll()
-    .then(data => (
-      this.setState({
-        myBooks: data
-      })
-    ))
+  async componentDidMount(){
+   const books = await getAll();
+   this.setState({myBooks: books})
   }
   
   bookUpdate = (book, event) => {
@@ -33,7 +27,7 @@ class BooksApp extends Component {
 
     if(book.shelf === "none"){
       const minusBook = this.state.myBooks.filter(currentBook =>
-        currentBook.title !== book.title)
+        currentBook.id !== book.id)
       
         this.setState({
         myBooks: minusBook

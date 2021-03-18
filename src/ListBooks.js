@@ -12,12 +12,19 @@ class ListBooks extends Component{
 
     updateQuery = (query) => {
       this.setState({
-          query: query.trim()
+          query: query
       })   
       search(query)
       .then(data => (
         this.setState(currentState => {
           const updatedBookSearch = data
+
+          if(updatedBookSearch.error){
+            
+            return{searchedBooks: []}
+            }
+          
+    
           
         if(query === ""){
           return{searchedBooks: []}
@@ -26,7 +33,7 @@ class ListBooks extends Component{
           return{
             searchedBooks: updatedBookSearch
           }
-        }
+        }  
         
         
         })))}
@@ -76,8 +83,8 @@ class ListBooks extends Component{
                       </select>
                     </div>
                   </div>
-              <div className="book-title">{book.title}</div>
-              <div className="book-authors">{book.authors}</div>
+                    <div className="book-title">{book.title}</div>
+                    <div className="book-authors">{book.authors}</div>
                 </div>
               </li>
               ))}
