@@ -22,6 +22,7 @@ class BooksApp extends Component {
     book.shelf = event;
     const {myBooks} = this.state;
     let newBooks = [];
+    update(book, event)
     newBooks.push(book)
     this.setState({
       myBooks: myBooks.concat(...newBooks)
@@ -33,11 +34,6 @@ class BooksApp extends Component {
   bookUpdate = (book, event) => {
     book.shelf = event;
     const {myBooks} = this.state;
-    let newBooks = [];
-    newBooks.push(book)
-    this.setState({
-      myBooks: myBooks.concat(...newBooks)
-    })
 
     //Checks to see if we set the bookshelf to none
     //If so we need to remove the book from the shelf
@@ -108,7 +104,7 @@ class BooksApp extends Component {
           </Route>
         
 
-        <Route exact path="/search" component={() => <ListBooks bookUpdate={this.bookUpdate} myBooks={this.state.myBooks} addBooks={this.addBooks}/>}></Route>
+        <Route exact path="/search" render={() => <ListBooks bookUpdate={this.bookUpdate} myBooks={this.state.myBooks} addBooks={this.addBooks}/>}></Route>
       </div>
     )
   }

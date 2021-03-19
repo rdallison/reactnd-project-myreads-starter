@@ -18,8 +18,6 @@ class PrintBooks extends Component{
         return(
             <div className="bookshelf-books">
             <ol className="books-grid">
-            <div className="bookshelf-books">
-            <ol className="books-grid">
             {books.map(book => (
         <li key={book.id}>
         <div className="book">
@@ -27,31 +25,18 @@ class PrintBooks extends Component{
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
             <div className="book-shelf-changer">
               <select onChange={event => bookUpdate(book, event.target.value)} value={book.shelf}>
-            {  bookOptions.map(option => {
-            
-                if(book.shelf === option.value){
+            {bookOptions.map(option => {
                     return(
                         <option key ={option.value} value={option.value} >{option.print}</option>
-                        )      
-
-                }else{
-                    return(
-                        <option key={option.value} value={option.value} >{option.print}</option>
-                        )      
-                }
-
-              
-        })}
+                        )})}
               </select>
             </div>
           </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{book.authors.join(',')}</div>
+      <div className="book-authors">{book.authors === undefined ? "" : book.authors.join(",")}</div>
         </div>
       </li>
       ))}
-            </ol>
-          </div>
             </ol>
           </div>
         )

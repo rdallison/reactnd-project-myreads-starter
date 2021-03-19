@@ -19,6 +19,10 @@ class ListBooks extends Component{
         this.setState(currentState => {
           const updatedBookSearch = data
 
+          if(updatedBookSearch === undefined){
+            return {searchedBooks: []}
+          }
+
           if(updatedBookSearch.error){
             
             return{searchedBooks: []}
@@ -42,13 +46,13 @@ class ListBooks extends Component{
   render(){
 
       const {query, searchedBooks} = this.state;
-      const {myBooks, addBooks} = this.props;
+      const {myBooks, bookUpdate, addBooks} = this.props;
 
         return(
             <div className="search-books">
             <div className="search-books-bar">
-              <Link to="/">
-              <button className="close-search">Close</button>
+              <Link to="/" className="close-search">
+              Close
               </Link>
               
               <div className="search-books-input-wrapper">
@@ -61,7 +65,12 @@ class ListBooks extends Component{
               <ol className="books-grid">
               {searchedBooks.map(book => {
                 const bookOnShelf = myBooks.find(({id}) => book.id === id);
-                const shelf = bookOnShelf ? bookOnShelf.shelf : "none"
+                const shelf = bookOnShelf ? bookOnShelf.shelf : "none";
+                const addOrUpdate = shelf === "none" ? addBooks : bookUpdate; 
+                if(book.imageLinks === undefined){
+                  book.imageLinks = {}
+                  book.imageLinks.thumbnail = ""
+                }
                 return(
                 <li key={book.id}>
                 <div className="book">
@@ -69,7 +78,7 @@ class ListBooks extends Component{
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
                     <div className="book-shelf-changer">
                       {console.log(bookOnShelf)}
-                      <select onChange={event => addBooks(book, event.target.value)} value={shelf}>
+                      <select onChange={event => addOrUpdate(book, event.target.value)} value={shelf}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>

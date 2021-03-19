@@ -1,5 +1,7 @@
 # MyReads Project
 
+MyReads is an application that keeps tracks of your books. You can place you book on one of three shelves which is currently reading, wants to read and read. You can change shelves once the books is added to your book list  and you can also remove the book once it is on the shelves by selecting none. When you are searching for a book, if the books is in your collection then you will see the books current shelf listed there and you can change the shelf from the search screen. 
+
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
