@@ -61,6 +61,7 @@ class ListBooks extends Component{
               <ol className="books-grid">
               {searchedBooks.map(book => {
                 const bookOnShelf = myBooks.find(({id}) => book.id === id);
+                const shelf = bookOnShelf ? bookOnShelf.shelf : "none"
                 return(
                 <li key={book.id}>
                 <div className="book">
@@ -68,7 +69,7 @@ class ListBooks extends Component{
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
                     <div className="book-shelf-changer">
                       {console.log(bookOnShelf)}
-                      <select onChange={event => addBooks(book, event.target.value)} value={bookOnShelf}>
+                      <select onChange={event => addBooks(book, event.target.value)} value={shelf}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
