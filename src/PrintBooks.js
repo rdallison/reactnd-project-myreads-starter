@@ -18,7 +18,12 @@ class PrintBooks extends Component{
         return(
             <div className="bookshelf-books">
             <ol className="books-grid">
-            {books.map(book => (
+            {books.map(book => {
+              if(book.imageLinks === undefined){
+                book.imageLinks = {}
+                book.imageLinks.thumbnail = "image not available"
+              }
+              return(
         <li key={book.id}>
         <div className="book">
           <div className="book-top">
@@ -35,8 +40,8 @@ class PrintBooks extends Component{
       <div className="book-title">{book.title}</div>
       <div className="book-authors">{book.authors === undefined ? "" : book.authors.join(",")}</div>
         </div>
-      </li>
-      ))}
+      </li>)
+    })}
             </ol>
           </div>
         )

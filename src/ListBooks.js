@@ -69,7 +69,7 @@ class ListBooks extends Component{
                 const addOrUpdate = shelf === "none" ? addBooks : bookUpdate; 
                 if(book.imageLinks === undefined){
                   book.imageLinks = {}
-                  book.imageLinks.thumbnail = ""
+                  book.imageLinks.thumbnail = "image not available"
                 }
                 return(
                 <li key={book.id}>
@@ -77,7 +77,6 @@ class ListBooks extends Component{
                   <div className="book-top">                    
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
                     <div className="book-shelf-changer">
-                      {console.log(bookOnShelf)}
                       <select onChange={event => addOrUpdate(book, event.target.value)} value={shelf}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
