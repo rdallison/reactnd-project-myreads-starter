@@ -17,10 +17,27 @@ class BooksApp extends Component {
    const books = await getAll();
    this.setState({myBooks: books})
   }
+
+  addBooks = (book, event) => {
+    book.shelf = event;
+    const {myBooks} = this.state;
+    let newBooks = [];
+    newBooks.push(book)
+    this.setState({
+      myBooks: myBooks.concat(...newBooks)
+    })
+  }
+
+ 
   
   bookUpdate = (book, event) => {
-
+    book.shelf = event;
     const {myBooks} = this.state;
+    let newBooks = [];
+    newBooks.push(book)
+    this.setState({
+      myBooks: myBooks.concat(...newBooks)
+    })
 
     //Checks to see if we set the bookshelf to none
     //If so we need to remove the book from the shelf
@@ -36,11 +53,7 @@ class BooksApp extends Component {
 
     //Checks to see if we updated the shelf for a certain book
     //If so, we need to call the update method and update the book in our state to cause the rerender
-    const bookAdded = myBooks.concat(book)
     update(book, event)
-    .then(this.setState({
-      mybooks: bookAdded
-    }))
     let updatedShelf = myBooks.map(currentBook => {
       if(currentBook.id === book.id){
         currentBook.shelf = event
@@ -48,16 +61,6 @@ class BooksApp extends Component {
       return currentBook
     })
 
-    let found = false;
-      updatedShelf.forEach((current) => {
-        if(current.title === book.title){
-          found = true
-        }
-      })
-
-      if(found === false){
-        updatedShelf = updatedShelf.concat(book)
-      }      
 
      this.setState({
       myBooks: updatedShelf
@@ -105,7 +108,7 @@ class BooksApp extends Component {
           </Route>
         
 
-        <Route exact path="/search" component={() => <ListBooks bookUpdate={this.bookUpdate} myBooks={this.state.myBooks}/>}></Route>
+        <Route exact path="/search" component={() => <ListBooks bookUpdate={this.bookUpdate} myBooks={this.state.myBooks} addBooks={this.addBooks}/>}></Route>
       </div>
     )
   }

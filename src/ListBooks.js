@@ -7,8 +7,7 @@ class ListBooks extends Component{
 
     state = {
         query: "",
-        searchedBooks: [],
-
+        searchedBooks: []
     };
 
     updateQuery = (query) => {
@@ -43,7 +42,7 @@ class ListBooks extends Component{
   render(){
 
       const {query, searchedBooks} = this.state;
-      const {bookUpdate, myBooks} = this.props;
+      const {myBooks, addBooks} = this.props;
 
         return(
             <div className="search-books">
@@ -64,9 +63,10 @@ class ListBooks extends Component{
                 <li key={book.id}>
                 <div className="book">
                   <div className="book-top">
+                    {console.log(searchedBooks)}
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: "url("+book.imageLinks.thumbnail+")" }}></div>
                     <div className="book-shelf-changer">
-                      <select onChange={event => bookUpdate(book, event.target.value, myBooks)} defaultValue="none">
+                      <select onChange={event => addBooks(book, event.target.value)} defaultValue="none">
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
